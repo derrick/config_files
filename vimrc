@@ -245,7 +245,7 @@ function! RunSpec(args)
   if exists("b:rails_root") && filereadable(b:rails_root . "/script/spec")
     let spec = b:rails_root . "/script/spec"
   else
-    let spec = "spec"
+    let spec = "bundle exec rspec"
   end
   let cmd = ":! " . spec . " % -cfn " . a:args
   execute cmd
@@ -275,3 +275,6 @@ endif
 
 let g:LustyExplorerSuppressRubyWarning = 1
 let g:LustyJugglerSuppressRubyWarning = 1
+
+compiler rubyunit
+nnoremap <Leader>fd :cf /tmp/autotest.txt<cr> :compiler rubyunit<cr>
