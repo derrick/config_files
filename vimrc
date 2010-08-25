@@ -273,8 +273,24 @@ if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
 endif
 
-let g:LustyExplorerSuppressRubyWarning = 1
-let g:LustyJugglerSuppressRubyWarning = 1
+function! HandleURI()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
+  if s:uri != ""
+    let s:uri = escape (s:uri, "#?&;|%")
+    exec "!open \"" . s:uri . "\""
+  else
+    echo "No URI found in line."
+  endif
+endfunction
+map <Leader>w :call HandleURI()<CR>
 
 compiler rubyunit
 nnoremap <Leader>fd :cf /tmp/autotest.txt<cr> :compiler rubyunit<cr>
+
+let g:LustyExplorerSuppressRubyWarning = 1
+let g:LustyJugglerSuppressRubyWarning = 1
+
+function! RestartRails()
+  exec "!touch tmp/restart.txt"
+endfunction
+map <Leader>rr :call RestartRails()<CR>
