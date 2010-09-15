@@ -12,6 +12,9 @@ set guioptions+=c
 
 set lines=50 columns=200
 
+set transparency=12
+colorscheme pablo
+
 " Local config
 if filereadable(".gvimrc.local")
   source .gvimrc.local
