@@ -92,21 +92,21 @@ let mapleader = ","
 map <Leader>R :e doc/README_FOR_APP<CR>
 
 " Leader shortcuts for Rails commands
-map <Leader>m :Rmodel 
-map <Leader>c :Rcontroller 
-map <Leader>v :Rview 
-map <Leader>u :Runittest 
-map <Leader>f :Rfunctionaltest 
-map <Leader>tm :RTmodel 
-map <Leader>tc :RTcontroller 
-map <Leader>tv :RTview 
-map <Leader>tu :RTunittest 
-map <Leader>tf :RTfunctionaltest 
-map <Leader>sm :RSmodel 
-map <Leader>sc :RScontroller 
-map <Leader>sv :RSview 
-map <Leader>su :RSunittest 
-map <Leader>sf :RSfunctionaltest 
+map <Leader>m :Rmodel
+map <Leader>c :Rcontroller
+map <Leader>v :Rview
+map <Leader>u :Runittest
+map <Leader>f :Rfunctionaltest
+map <Leader>tm :RTmodel
+map <Leader>tc :RTcontroller
+map <Leader>tv :RTview
+map <Leader>tu :RTunittest
+map <Leader>tf :RTfunctionaltest
+map <Leader>sm :RSmodel
+map <Leader>sc :RScontroller
+map <Leader>sv :RSview
+map <Leader>su :RSunittest
+map <Leader>sf :RSfunctionaltest
 
 " Hide search highlighting
 map <Leader>h :set invhls <CR>
@@ -192,6 +192,10 @@ set smartcase
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
 colorscheme vividchalk
+"colorscheme molokai
+"let g:molokai_original = 1
+"colorscheme mustang
+"colorscheme clouds_midnight
 
 " bind \d to toggle file browser
 " requires NERDTree
@@ -235,6 +239,9 @@ nmap <leader>v :vsplit<CR> <C-w><C-w>
 nmap <leader>s :split<CR> <C-w><C-w>
 
 nmap <leader>w <C-w><C-w>_
+
+
+
 
 inoremap <D-CR> <C-O>o
 
@@ -290,7 +297,26 @@ nnoremap <Leader>fd :cf /tmp/autotest.txt<cr> :compiler rubyunit<cr>
 let g:LustyExplorerSuppressRubyWarning = 1
 let g:LustyJugglerSuppressRubyWarning = 1
 
-function! RestartRails()
+function! RestartRailsApp()
   exec "!touch tmp/restart.txt"
 endfunction
-map <Leader>rr :call RestartRails()<CR>
+map <Leader>rr :call RestartRailsApp()<CR>
+
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/#making-vim-more-useful
+nnoremap j gj
+nnoremap k gk
+
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+nnoremap ; :
+
+nnoremap <leader><Space> :%s/\s\+$//<cr>:let @/=''<CR>
+
+nnoremap <leader>v V`]
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l

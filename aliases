@@ -1,6 +1,8 @@
 export CMS_DEV_ROOT="/Users/mattdean/cms/trabian_cms"
 export CMS_GEM_DEV_ROOT="/Users/mattdean/cms/gems"
 
+export EDITOR='mate -w'
+
 # cd
 alias ..="cd .."
 alias cdd="cd -"
@@ -83,9 +85,9 @@ function cmsinit_local() {
   env ARCHFLAGS="-arch x86_64" rails -m ~/cms/rails-templates/cms.rb $1
 }
 
-# function bundle() {
-#   env ARCHFLAGS="-arch x86_64" /usr/bin/bundle $*
-# }
+function bundle() {
+  env ARCHFLAGS="-arch x86_64" /usr/bin/bundle $*
+}
 
 ###########
 # Tunnels #
