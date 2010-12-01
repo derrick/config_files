@@ -215,6 +215,9 @@ let g:fuzzy_celing=20000
 map <leader>ff :FuzzyFinderTextMate<CR>
 map <leader>fb :FuzzyFinderBuffer<CR>
 
+" change MakeGreen from <Leader>t to <Leader>]
+map <Leader>] <Plug>MakeGreen 
+
 map <D-1> :tabn 1<CR>
 map <D-2> :tabn 2<CR>
 map <D-3> :tabn 3<CR>
@@ -261,7 +264,8 @@ endfunction
 map !s :call RunSpec("-l " . <C-r>=line('.')<CR>)
 map !S :call RunSpec("")
 
-map <Leader>r <Plug>MakeGreen
+" map <Leader>r <Plug>MakeGreen
+map <Leader>r :!ruby %
 
 if has("gui_running")
   set fuoptions=maxvert,maxhorz
