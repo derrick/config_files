@@ -29,7 +29,10 @@ map Q gq
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
   set hlsearch
+  nnoremap <esc> :noh<return><esc>
 endif
+
+set cursorline
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -58,6 +61,9 @@ if has("autocmd")
   autocmd BufNewFile,BufRead *.xml source ~/.vim/ftplugin/xml.vim
 
   augroup END
+  
+  autocmd WinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
 
 else
 
@@ -81,12 +87,13 @@ set expandtab
 " Always display the status line
 set laststatus=2
 
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-13(\ %l,%c-%v\ %)%-21{strftime('%a\ %y.%m.%d\ %H:%M\')}%P
 set statusline+=%{rvm#statusline()}
 
+
 " \ is the leader character
-"let mapleader = "\\"
-let mapleader = ","
+let mapleader = "\\"
+
 
 " Edit the README_FOR_APP (makes :R commands work)
 map <Leader>R :e doc/README_FOR_APP<CR>
