@@ -203,9 +203,9 @@ nmap <D-d> :NERDTreeToggle<CR>
 
 " bind command-/ to toggle comment
 " requires NERD Commenter to be installed
-nmap <D-/> ,c<space>
-vmap <D-/> ,c<space>
-imap <D-/> <C-O>,c<space>
+nmap <D-/> <Leader>c<space>
+vmap <D-/> <Leader>c<space>
+imap <D-/> <C-O><Leader>c<space>
 
 let g:fuzzy_matching_limit=70
 let g:fuzzy_ignore = "*.log"
