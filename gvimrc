@@ -13,7 +13,7 @@ set guioptions+=c
 
 set lines=50 columns=200
 
-set transparency=12
+set transparency=32
 
 " Local config
 if filereadable(".gvimrc.local")
