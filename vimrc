@@ -30,6 +30,7 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
   set hlsearch
   nnoremap <esc> :noh<return><esc>
+  " map <Leader>h :set invhls <CR>    " Hide search highlighting
 endif
 
 set cursorline
