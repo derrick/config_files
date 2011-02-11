@@ -1,10 +1,18 @@
+" *****************************************************************************
+" Pathogen ********************************************************************
+" *****************************************************************************
 silent! call pathogen#runtime_append_all_bundles()
+
+
+" *****************************************************************************
+" Settings ********************************************************************
+" *****************************************************************************
 
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-"Don't warn before switching away from an unsaved buffer
+" Don't warn before switching away from an unsaved buffer
 set hidden
 
 " allow backspacing over everything in insert mode
@@ -12,17 +20,13 @@ set backspace=indent,eol,start
 
 set nobackup
 set nowritebackup
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
+set history=50         " keep 50 lines of command line history
+set ruler              " show the cursor position all the time
+set showcmd            " display incomplete commands
+set incsearch          " do incremental searching
 
-" Don't use Ex mode, use Q for formatting
+" Don't use Ex mode, instead use Q for formatting
 map Q gq
-
-" This is an alternative that also works in block mode, but the deleted
-" text is lost and it only works for putting the current register.
-"vnoremap p "_dp
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -72,52 +76,23 @@ else
 
 endif " has("autocmd")
 
-" if has("folding")
-  " set foldenable
-  " set foldmethod=syntax
-  " set foldlevel=1
-  " set foldnestmax=2
-  " set foldtext=strpart(getline(v:foldstart),0,50).'\ ...\ '.substitute(getline(v:foldend),'^[\ #]*','','g').'\ '
-" endif
-
 " Softtabs, 2 spaces
 set tabstop=2
 set shiftwidth=2
 set expandtab
 
+" Display extra whitespace
+set list listchars=tab:»·,trail:·
+
 " Always display the status line
 set laststatus=2
 
+" Fancy status line; even displays the time
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-13(\ %l,%c-%v\ %)%-21{strftime('%a\ %y.%m.%d\ %H:%M\')}%P
 set statusline+=%{rvm#statusline()}
 
-
 " \ is the leader character
 let mapleader = "\\"
-
-
-" Edit the README_FOR_APP (makes :R commands work)
-map <Leader>R :e doc/README_FOR_APP<CR>
-
-" Leader shortcuts for Rails commands
-map <Leader>m :Rmodel
-map <Leader>c :Rcontroller
-map <Leader>v :Rview
-map <Leader>u :Runittest
-map <Leader>f :Rfunctionaltest
-map <Leader>tm :RTmodel
-map <Leader>tc :RTcontroller
-map <Leader>tv :RTview
-map <Leader>tu :RTunittest
-map <Leader>tf :RTfunctionaltest
-map <Leader>sm :RSmodel
-map <Leader>sc :RScontroller
-map <Leader>sv :RSview
-map <Leader>su :RSunittest
-map <Leader>sf :RSfunctionaltest
-
-" Hide search highlighting
-map <Leader>h :set invhls <CR>
 
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
@@ -148,18 +123,12 @@ vmap D y'>p
 " For Haml
 au! BufRead,BufNewFile *.haml         setfiletype haml
 
-" No Help, please
-nmap <F1> <Esc>
-
 " Press ^F from insert mode to insert the current file name
 imap <C-F> <C-R>=expand("%")<CR>
 
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
 vmap P p :call setreg('"', getreg('0')) <CR>
-
-" Display extra whitespace
-set list listchars=tab:»·,trail:·
 
 " Edit routes
 command! Rroutes :e config/routes.rb
@@ -176,6 +145,11 @@ if executable("ack")
 endif
 
 " Color scheme
+colorscheme vividchalk
+"colorscheme molokai
+"let g:molokai_original = 1
+"colorscheme mustang
+"colorscheme clouds_midnight
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
@@ -185,7 +159,6 @@ set numberwidth=5
 
 " Snippets are activated by Shift+Tab
 let g:snippetsEmu_key = "<S-Tab>"
-
 
 " (only complete to the longest unambiguous match, and show a menu)
 set completeopt=longest,menu
@@ -199,12 +172,6 @@ set smartcase
 " Tags
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
-colorscheme vividchalk
-"colorscheme molokai
-"let g:molokai_original = 1
-"colorscheme mustang
-"colorscheme clouds_midnight
-
 " bind \d to toggle file browser
 " requires NERDTree
 nmap <D-d> :NERDTreeToggle<CR>
@@ -214,14 +181,6 @@ nmap <D-d> :NERDTreeToggle<CR>
 nmap <D-/> <Leader>c<space>
 vmap <D-/> <Leader>c<space>
 imap <D-/> <C-O><Leader>c<space>
-
-let g:fuzzy_matching_limit=70
-let g:fuzzy_ignore = "*.log"
-let g:fuzzy_celing=20000
-
-" binds \ t to textmate-style fuzzy finder
-map <leader>ff :FuzzyFinderTextMate<CR>
-map <leader>fb :FuzzyFinderBuffer<CR>
 
 " change MakeGreen from <Leader>t to <Leader>]
 map <Leader>] <Plug>MakeGreen 
@@ -277,15 +236,15 @@ function! RunSpec(args)
   execute cmd
 endfunction
 
-map !s :call RunSpec("-l " . <C-r>=line('.')<CR>)
-map !S :call RunSpec("")
+map ,s :call RunSpec("-l " . <C-r>=line('.')<CR>)<CR>
+map ,S :call RunSpec("")<CR>
 
 " map <Leader>r <Plug>MakeGreen
 map <Leader>r :!ruby %
 
 if has("gui_running")
   set fuoptions=maxvert,maxhorz
-" au GUIEnter * set fullscreen
+  au GUIEnter * set fullscreen
 endif
 
 
@@ -314,29 +273,66 @@ map <Leader>w :call HandleURI()<CR>
 compiler rubyunit
 nnoremap <Leader>fd :cf /tmp/autotest.txt<cr> :compiler rubyunit<cr>
 
-let g:LustyExplorerSuppressRubyWarning = 1
-let g:LustyJugglerSuppressRubyWarning = 1
-
 function! RestartRailsApp()
   exec "!touch tmp/restart.txt"
 endfunction
 map <Leader>rr :call RestartRailsApp()<CR>
 
-" http://stevelosh.com/blog/2010/09/coming-home-to-vim/#making-vim-more-useful
-nnoremap j gj
-nnoremap k gk
 
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
 
+" *****************************************************************************
+" Navigation ******************************************************************
+" *****************************************************************************
+
+" Dvorak-centric benefits
+no s :
+no S :
+no - $
+no _ ^
+
+" Don't need to hold shift to hit a colon in normal mode
 nnoremap ; :
 
-nnoremap <leader><Space> :%s/\s\+$//<cr>:let @/=''<CR>
-
-nnoremap <leader>v V`]
-
+" Move between windows
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Zoom the current window
+map <Leader><Leader> :ZoomWin<CR>
+
+" Make j and k move through screen lines rather than actual file lines
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/#making-vim-more-useful
+nnoremap j gj
+nnoremap k gk
+
+" Because F1 is so dog-gone close to the esc key
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" Leader shortcuts for Rails commands
+map <Leader>m :Rmodel
+map <Leader>c :Rcontroller
+map <Leader>v :Rview
+map <Leader>u :Runittest
+map <Leader>f :Rfunctionaltest
+map <Leader>tm :RTmodel
+map <Leader>tc :RTcontroller
+map <Leader>tv :RTview
+map <Leader>tu :RTunittest
+map <Leader>tf :RTfunctionaltest
+map <Leader>sm :RSmodel
+map <Leader>sc :RScontroller
+map <Leader>sv :RSview
+map <Leader>su :RSunittest
+map <Leader>sf :RSfunctionaltest
+
+
+" *****************************************************************************
+" Unknown stuff I found lying around ... what does it mean? *******************
+" *****************************************************************************
+
+nnoremap <leader><Space> :%s/\s\+$//<cr>:let @/=''<CR>
+nnoremap <leader>v V`]
