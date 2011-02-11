@@ -258,7 +258,15 @@ inoremap <D-CR> <C-O>o
 " \F to startup an ack search
 map <leader>F :Ack<space>
 
+function! RedoMigration(args)
+  let ver = matchstr(getreg("%"),'\<db/migrate/0*\zs\d*\ze_')
+  execute ":! rake db:migrate:redo VERSION=".ver
+endfunction
+
+map !m :call RedoMigration("")
+
 function! RunSpec(args)
+  execute ":wa"
   if exists("b:rails_root") && filereadable(b:rails_root . "/script/spec")
     let spec = b:rails_root . "/script/spec"
   else
