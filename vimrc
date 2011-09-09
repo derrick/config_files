@@ -25,6 +25,11 @@ set ruler              " show the cursor position all the time
 set showcmd            " display incomplete commands
 set incsearch          " do incremental searching
 
+set foldmethod=syntax
+autocmd FileType css setlocal foldmethod=indent shiftwidth=2 tabstop=2
+autocmd FileType sass setlocal foldmethod=indent shiftwidth=2 tabstop=2
+autocmd FileType scss setlocal foldmethod=indent shiftwidth=2 tabstop=2
+
 " Don't use Ex mode, instead use Q for formatting
 map Q gq
 
@@ -35,6 +40,7 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   set hlsearch
   nnoremap <esc> :noh<return><esc>
   " map <Leader>h :set invhls <CR>    " Hide search highlighting
+  nnoremap <Leader>h :set syntax=haml <CR>
 endif
 
 set cursorline
@@ -239,6 +245,22 @@ endfunction
 map ,s :call RunSpec("-l " . <C-r>=line('.')<CR>)<CR>
 map ,S :call RunSpec("")<CR>
 
+function! GreenHerbIngredientList()
+  execute ":%s:\\v^((\\u|\\s|\\d|\\%)+(\\u|\\d|\\%))\\s*-\\s*(.*)$:  <dt>\\1</dt>\r  <dd>\\4</dd>:g"
+endfunction
+
+function! TwiddleCase(str)
+  if a:str ==# toupper(a:str)
+    let result = tolower(a:str)
+  elseif a:str ==# tolower(a:str)
+    let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+  else
+    let result = toupper(a:str)
+  endif
+  return result
+endfunction
+vnoremap ~ ygv"=TwiddleCase(@")<CR>Pgv
+
 " map <Leader>r <Plug>MakeGreen
 map <Leader>r :!ruby %
 
@@ -289,6 +311,10 @@ no s :
 no S :
 no - $
 no _ ^
+"function! DvorakOff()
+  "nunmap h
+  "nunmap t
+"endfunction
 
 " Don't need to hold shift to hit a colon in normal mode
 nnoremap ; :
@@ -306,6 +332,13 @@ map <Leader><Leader> :ZoomWin<CR>
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/#making-vim-more-useful
 nnoremap j gj
 nnoremap k gk
+
+" Use space to center window in normal mode
+nmap <space> zz
+
+" Make search results move to center of screen
+nmap n nzz
+nmap N Nzz
 
 " Because F1 is so dog-gone close to the esc key
 inoremap <F1> <ESC>
