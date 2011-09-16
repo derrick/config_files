@@ -4,12 +4,6 @@
 [submodule "vim/bundle/vim-rails"]
 	path = vim/bundle/vim-rails
 	url = git://github.com/tpope/vim-rails.git
-[submodule "vim/bundle/vim-ragtag"]
-	path = vim/bundle/vim-ragtag
-	url = git://github.com/tpope/vim-ragtag.git
-[submodule "vim/bundle/snipmate"]
-	path = vim/bundle/snipmate
-	url = git://github.com/msanders/snipmate.vim.git
 [submodule "vim/bundle/vim-rake"]
 	path = vim/bundle/vim-rake
 	url = git://github.com/tpope/vim-rake.git
@@ -28,18 +22,12 @@
 [submodule "vim/bundle/nerdcommenter"]
 	path = vim/bundle/nerdcommenter
 	url = git://github.com/scrooloose/nerdcommenter.git
-[submodule "vim/bundle/git-vim"]
-	path = vim/bundle/git-vim
-	url = git://github.com/motemen/git-vim.git
 [submodule "vim/bundle/coffee-script"]
 	path = vim/bundle/coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
 [submodule "vim/bundle/ack.vim"]
 	path = vim/bundle/ack.vim
 	url = git://github.com/mileszs/ack.vim.git
-[submodule "vim/bundle/vim-autoclose"]
-	path = vim/bundle/vim-autoclose
-	url = git://github.com/Townk/vim-autoclose.git
 [submodule "vim/bundle/vim-surround"]
 	path = vim/bundle/vim-surround
 	url = git://github.com/tpope/vim-surround.git
@@ -55,21 +43,12 @@
 [submodule "vim/bundle/vim-nginx"]
 	path = vim/bundle/vim-nginx
 	url = git://github.com/clones/vim-nginx.git
-[submodule "vim/bundle/supertab"]
-	path = vim/bundle/supertab
-	url = git://github.com/ervandew/supertab.git
 [submodule "vim/bundle/vim-zoomwin"]
 	path = vim/bundle/vim-zoomwin
 	url = git://github.com/rphillips/vim-zoomwin.git
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
 	url = git://github.com/wincent/Command-T.git
-[submodule "vim/bundle/taglist"]
-	path = vim/bundle/taglist
-	url = git://github.com/esukram/taglist.vim.git
-[submodule "vim/bundle/vim-slurper"]
-	path = vim/bundle/vim-slurper
-	url = git://github.com/alowe/vim-slurper.git
 [submodule "vim/bundle/bufexplorer"]
 	path = vim/bundle/bufexplorer
 	url = https://github.com/vim-scripts/bufexplorer.zip.git
