@@ -108,28 +108,37 @@ set showmatch
 set incsearch          " do incremental searching
 
 " Display extra whitespace
-set list listchars=tab:»·,trail:·
+" set list listchars=tab:»·,trail:
 
 " Always display the status line
 set laststatus=2
 
+" Always show the tab line
+set showtabline=2
+
+" GRB: Put useful info in status line
+":set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
+:hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
+
+set cmdheight=2
+
+set switchbuf=useopen
+
+
 " Fancy status line; even displays the time
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-13(\ %l,%c-%v\ %)%-21{strftime('%a\ %y.%m.%d\ %H:%M\')}%P
-set statusline+=%{rvm#statusline()}
+"set statusline+=%{rvm#statusline()}
 
 " \ is the leader character
-let mapleader = "\\"
+"let mapleader = "\\"
+let mapleader = ","
 
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
-map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-map <Leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
-map <Leader>ev :vsp <C-R>=expand("%:p:h") . "/" <CR>
-map <Leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
-
-" Inserts the path of the currently edited file into a command
-" Command mode: Ctrl+P
-cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+map <Leader>e :e %%
+map <Leader>es :sp %%
+map <Leader>ev :vsp %%
+map <Leader>et :tabe %%
 
 " Maps autocomplete to tab
 " imap <Tab> <C-N>
@@ -171,12 +180,15 @@ if executable("ack")
 endif
 
 " Color scheme
-colorscheme vividchalk
+" colorscheme wombat
+colorscheme wombat256mod
+"colorscheme vividchalk
 "colorscheme molokai
 "let g:molokai_original = 1
 "colorscheme mustang
 "colorscheme clouds_midnight
 highlight NonText guibg=#060606
+highlight CursorLine guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
 " Numbers
@@ -251,10 +263,15 @@ endfunction
 
 map !m :call RedoMigration("")
 
+
+" ******************************************************************************
+" Testing **********************************************************************
+" ******************************************************************************
+
 function! RunSpec(args)
   execute ":wa"
   if exists("b:rails_root") && filereadable(b:rails_root . "/script/spec")
-    let spec = b:rails_root . "/script/spec"
+  let spec = b:rails_root . "/script/spec"
   else
     let spec = "bundle exec rspec"
   end
@@ -445,7 +462,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Zoom the current window
-map <Leader><Leader> :ZoomWin<CR>
+map \\ :ZoomWin<cr>
 
 " Make j and k move through screen lines rather than actual file lines
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/#making-vim-more-useful
