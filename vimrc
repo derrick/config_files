@@ -37,13 +37,15 @@ map Q gq
 " Also switch on highlighting the last used search pattern.
 if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
-  set hlsearch
-  nnoremap <esc> :noh<return><esc>
-  " map <Leader>h :set invhls <CR>    " Hide search highlighting
-  nnoremap <Leader>h :set syntax=haml <CR>
 endif
 
-set cursorline
+set cursorline " highlight the cursor line
+set hlsearch
+:nnoremap <ESC><ESC> :nohlsearch<cr>
+"nnoremap <esc> :noh<return><esc>
+" map <Leader>h :set invhls <CR>    " Hide search highlighting
+nnoremap <Leader>h :set syntax=haml <CR>
+
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
