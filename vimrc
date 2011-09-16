@@ -366,11 +366,64 @@ function! RestartRailsApp()
 endfunction
 map <Leader>rr :call RestartRailsApp()<CR>
 
+" Toggle text wrapping
+function! ToggleWrap()
+  if (&wrap == 1)
+    if (&linebreak == 0)
+      set linebreak
+    else
+      set nowrap
+    endif
+  else
+    set wrap
+    set nolinebreak
+  endif
+endfunction
+
+nnoremap <D-w> :call ToggleWrap()<CR>
 
 
 " *****************************************************************************
 " Navigation ******************************************************************
 " *****************************************************************************
+
+" The directory of the current file
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+""" Custom Command-T mappings
+" Open files with <leader>f
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+" Open files, limited to the directory of the current file, with <leader>gf
+map <leader>gf :CommandTFlush<cr>\|:CommandT %%<cr>
+
+" Custom Rails-specific Command-T mappings
+map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
+map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
+map <leader>gh :CommandTFlush<cr>\|:CommandT app/helpers<cr>
+map <leader>gl :CommandTFlush<cr>\|:CommandT lib<cr>
+map <leader>gp :CommandTFlush<cr>\|:CommandT public<cr>
+map <leader>gs :CommandTFlush<cr>\|:CommandT public/stylesheets<cr>
+
+" Mapping to open specific Rails files
+map <leader>gr :topleft :split config/routes.rb<cr>
+map <leader>gg :topleft 100 :split Gemfile<cr>
+function! ShowRoutes()
+  " Requires 'scratch' plugin
+  :topleft 100 :split __Routes__
+  " Make sure Vim doesn't write __Routes__ as a file
+  :set buftype=nofile
+  " Delete everything
+  :normal 1GdG
+  " Put routes output in buffer
+  :0r! rake -s routes
+  " Size window to number of lines (1 plus rake output length)
+  :exec ":normal " . line("$") . "_ "
+  " Move cursor to bottom
+  :normal 1GG
+  " Delete empty trailing line
+  :normal dd
+endfunction
+map <leader>gR :call ShowRoutes()<cr>
 
 " Dvorak-centric benefits
 no s :
