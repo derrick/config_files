@@ -15,15 +15,30 @@ set nocompatible
 " Don't warn before switching away from an unsaved buffer
 set hidden
 
+" Remember more commands and search history
+set history=1000
+
+" Make tab completion for files/buffers act like bash
+set wildmenu
+
+" Make searches case-sensitive only if they contain upper-case characters
+set ignorecase
+set smartcase
+
+" Keep more context when scrolling off the end of a buffer
+set scrolloff=3
+
+" Store temporary files in a central spot
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
 set nobackup
 set nowritebackup
-set history=50         " keep 50 lines of command line history
 set ruler              " show the cursor position all the time
 set showcmd            " display incomplete commands
-set incsearch          " do incremental searching
 
 "set foldmethod=syntax
 autocmd FileType css setlocal foldmethod=indent shiftwidth=2 tabstop=2
@@ -87,7 +102,10 @@ endif " has("autocmd")
 " Softtabs, 2 spaces
 set tabstop=2
 set shiftwidth=2
+set softtabstop=2
 set expandtab
+set showmatch
+set incsearch          " do incremental searching
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·
