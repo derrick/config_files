@@ -25,7 +25,7 @@ set ruler              " show the cursor position all the time
 set showcmd            " display incomplete commands
 set incsearch          " do incremental searching
 
-set foldmethod=syntax
+"set foldmethod=syntax
 autocmd FileType css setlocal foldmethod=indent shiftwidth=2 tabstop=2
 autocmd FileType sass setlocal foldmethod=indent shiftwidth=2 tabstop=2
 autocmd FileType scss setlocal foldmethod=indent shiftwidth=2 tabstop=2
