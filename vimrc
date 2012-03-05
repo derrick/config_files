@@ -12,6 +12,9 @@ silent! call pathogen#runtime_append_all_bundles()
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+set ttyfast
+set lazyredraw
+
 " Don't warn before switching away from an unsaved buffer
 set hidden
 
@@ -20,6 +23,7 @@ set history=1000
 
 " Make tab completion for files/buffers act like bash
 set wildmenu
+set wildignore+=.git,/vendor/rails/**,vendor/cache/**,tmp/**,solr/**,log/**
 
 " Make searches case-sensitive only if they contain upper-case characters
 set ignorecase
@@ -99,6 +103,8 @@ else
 
 endif " has("autocmd")
 
+:set encoding=utf-8
+
 " Softtabs, 2 spaces
 set tabstop=2
 set shiftwidth=2
@@ -108,7 +114,10 @@ set showmatch
 set incsearch          " do incremental searching
 
 " Display extra whitespace
-" set list listchars=tab:»·,trail:
+"set list listchars=tab:»,trail:·
+"set list listchars=tab:»
+"set list listchars=trail:·
+
 
 " Always display the status line
 set laststatus=2
@@ -212,7 +221,7 @@ let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
 " bind \d to toggle file browser
 " requires NERDTree
-nmap <D-d> :NERDTreeToggle<CR>
+nmap <leader>d :NERDTreeToggle<CR>
 
 " bind command-/ to toggle comment
 " requires NERD Commenter to be installed
@@ -284,7 +293,7 @@ map ,s :call RunSpec("")<CR>
 
 function! RunTests(filename)
     " Write the file and run tests for the given filename
-    :w
+    :wa
     :silent !echo;echo;echo;echo;echo
     exec ":!script/test " . a:filename
 endfunction
@@ -303,6 +312,12 @@ function! RunTestFile(...)
 
     " Run the tests for the previously-marked file.
     let in_spec_file = match(expand("%"), '_spec.rb$') != -1
+    if !in_spec_file
+      let in_spec_file = match(expand("%"), '_spec.js$') != -1
+    end
+    if !in_spec_file
+      let in_spec_file = match(expand("%"), '_spec.coffee') != -1
+    end
     if in_spec_file
         call SetTestFile()
     elseif !exists("t:grb_test_file")
@@ -349,7 +364,7 @@ map <Leader>r :!ruby %
 
 if has("gui_running")
   set fuoptions=maxvert,maxhorz
-  au GUIEnter * set fullscreen
+  "au GUIEnter * set fullscreen
 endif
 
 
@@ -408,8 +423,10 @@ nnoremap <D-w> :call ToggleWrap()<CR>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 """ Custom Command-T mappings
+let g:CommandTMatchWindowAtTop=1
+let g:CommandTMaxFiles=50000
 " Open files with <leader>f
-map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>f :CommandT<cr>
 " Open files, limited to the directory of the current file, with <leader>gf
 map <leader>gf :CommandTFlush<cr>\|:CommandT %%<cr>
 
@@ -441,16 +458,6 @@ function! ShowRoutes()
   :normal dd
 endfunction
 map <leader>gR :call ShowRoutes()<cr>
-
-" Dvorak-centric benefits
-no s :
-no S :
-no - $
-no _ ^
-"function! DvorakOff()
-  "nunmap h
-  "nunmap t
-"endfunction
 
 " Don't need to hold shift to hit a colon in normal mode
 nnoremap ; :
