@@ -1,1 +1,0 @@
-Integrate jlint with javascript files: http://stackoverflow.com/questions/473478/vim-jslint
